@@ -7,12 +7,21 @@ import os
 # Load churn dataset
 data = pd.read_csv("data/processed_data.csv")
 
-# Features & target (assuming "Churn" is the target column)
+# Drop customerID (not useful for prediction)
+if "customerID" in data.columns:
+    data = data.drop("customerID", axis=1)
+
+# Target column
+y = data["Churn"].map({"Yes": 1, "No": 0})  # convert Yes/No → 1/0
 X = data.drop("Churn", axis=1)
-y = data["Churn"]
+
+# One-hot encode categorical variables
+X = pd.get_dummies(X)
 
 # Split into train/test
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
 
 # Train RandomForest
 model = RandomForestClassifier(n_estimators=100, random_state=42)
@@ -25,3 +34,5 @@ os.makedirs("model", exist_ok=True)
 joblib.dump(model, "model/churn_model.pkl")
 
 print("✅ Model training complete. Saved as model/churn_model.pkl")
+print(f"Training accuracy: {model.score(X_train, y_train):.4f}")
+print(f"Test accuracy: {model.score(X_test, y_test):.4f}")
