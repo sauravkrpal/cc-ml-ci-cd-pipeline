@@ -10,7 +10,7 @@ X = data.drop("Churn", axis=1)   # assuming your target column is "Churn"
 y = data["Churn"]
 
 # Load the trained model
-model = joblib.load("model/cc_model.pkl")
+model = joblib.load("model/customer_segmentation.pkl")
 
 # Make predictions
 y_pred = model.predict(X)
