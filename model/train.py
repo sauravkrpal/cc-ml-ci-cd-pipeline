@@ -1,8 +1,7 @@
 import pandas as pd
-<<<<<<< HEAD
 from sklearn.cluster import KMeans
-import joblib
-import os
+from sklearn.model_selection import train_test_split
+
 
 # Load the dataset directly from Mall_Customers.csv
 data = pd.read_csv(r'data/mall.csv')
