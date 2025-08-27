@@ -29,7 +29,8 @@ model.fit(X_train, y_train)
 
 # Create directories
 os.makedirs("model", exist_ok=True)
-
+# Save feature columns for later
+joblib.dump(X.columns, "model/trained_columns.pkl")
 # Save model
 joblib.dump(model, "model/churn_model.pkl")
 
